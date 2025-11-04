@@ -48,29 +48,4 @@ Desplegar una infraestructura completa para una aplicación multicapa que incluy
 - **Formato:** CSV
 - **Contenido:** Listado de equipamientos educativos de la ciudad
 
-## 🗓️ Planificación - Sprints
-
-### Sprint 1 (Semanas 1-2 | 10h)
-**Objetivo:** Planificación y configuración inicial
-- [ ] Definir arquitectura de red y crear diagrama
-- [ ] Configurar repositorio Git
-- [ ] Instalar y configurar Router (R-NCC) con 3 redes
-- [ ] Instalar y configurar Web Server (W-NCC)
-- [ ] Configurar servicio SSH
-
-### Sprint 2 (Semanas 3-4 | 10h)
-**Objetivo:** Servicios de red y base de datos
-- [ ] Instalar y configurar Base de Datos (B-NCC) con MySQL
-- [ ] Descargar y cargar dataset de equipamientos educativos
-- [ ] Configurar servicios DHCP y DNS
-- [ ] Instalar y configurar FTP Server (F-NCC)
-
-### Sprint 3 (Semanas 5-6 | 10h)
-**Objetivo:** Clientes, aplicación web y pruebas
-- [ ] Configurar PC Windows y Linux
-- [ ] Desarrollar aplicación web para mostrar datos de la BBDD
-- [ ] Realizar pruebas de conectividad y servicios
-- [ ] Verificar acceso con usuario `bchecker` en todos los sistemas
-- [ ] Documentación final
-
 ## 📁 Estructura del Repositorio
