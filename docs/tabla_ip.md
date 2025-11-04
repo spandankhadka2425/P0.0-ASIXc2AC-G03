@@ -35,7 +35,7 @@
 
 ## 🔧 Notas de Configuración
 
-- **Usuario estándar:** `bchecker` con contraseña `bchecker121` en todos los equipos
-- **Router R-N03** tiene múltiples interfaces para conectar las tres redes
-- **Servidores** ubicados en DMZ para mayor seguridad
-- **Clientes** ubicados en INTRANET para acceso interno
+- **Usuario estándar:** `bchecker` con contraseña `bchecker121` en todos los equipos.
+- **Router R-N03** tiene múltiples interfaces para conectar las tres redes.
+- **Servidores** ubicados en DMZ para mayor seguridad.
+- **Clientes** ubicados en INTRANET para acceso interno.
