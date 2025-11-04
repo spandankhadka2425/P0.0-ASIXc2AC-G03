@@ -2,15 +2,14 @@
 
 ## 📊 Especificación de Equipos y Redes
 
-| Servicio | Nombre del Equipo | IP | Red Virtual | Función |
-|----------|-------------------|-----|-------------|----------|
-| **WebServer** | W-N03 | 192.168.130.2 | DMZ | Servidor Web |
-| **Router** | R-N03 | 192.168.130.1 | DMZ | Red para servidores |
-| **Router** | R-N03 | 192.168.30.1 | INTRANET | Red para usuarios |
-| **BBDD** | B-N03 | 192.168.130.3 | DMZ | Servidor MySQL |
-| **FTP** | F-N03 | 192.168.130.4 | DMZ | Servidor FTP |
-| **Cliente Windows** | PC-1.03 | 192.168.30.2 | INTRANET | Cliente |
-| **Cliente Linux** | PC-2.03 | 192.168.30.3 | INTRANET | Cliente |
+| Servicio        | Nombre del Equipo | IPs                        | Redes Virtuales         | Función                              |
+|-----------------|------------------|----------------------------|------------------------|--------------------------------------|
+| WebServer       | W-N03            | 192.168.130.2              | DMZ                    | Servidor Web                         |
+| **Router**      | R-N03            | 192.168.130.1<br>192.168.30.1 | NAT<br>DMZ<br>INTRANET | Salida a internet<br>Red para servers<br>Red interna |
+| BBDD            | B-N03            | 192.168.130.3              | DMZ                    | Servidor MySQL                       |
+| FTP             | F-N03            | 192.168.130.4              | DMZ                    | Servidor FTP                         |
+| C. Windows      | PC-1.03          | 192.168.30.2               | INTRANET               | Cliente                              |
+| C. Linux        | PC-2.03          | 192.168.30.3               | INTRANET               | Cliente                              |
 
 ## 🌐 Resumen de Configuración de Redes
 
@@ -35,7 +34,7 @@
 
 ## 🔧 Notas de Configuración
 
-- **Usuario estándar:** `bchecker` con contraseña `bchecker121` en todos los equipos.
-- **Router R-N03** tiene múltiples interfaces para conectar las tres redes.
-- **Servidores** ubicados en DMZ para mayor seguridad.
-- **Clientes** ubicados en INTRANET para acceso interno.
+- **Usuario estándar:** `bchecker` con contraseña `bchecker121` en todos los equipos
+- **Router R-N03** tiene múltiples interfaces para conectar las tres redes
+- **Servidores** ubicados en DMZ para mayor seguridad
+- **Clientes** ubicados en INTRANET para acceso intern
