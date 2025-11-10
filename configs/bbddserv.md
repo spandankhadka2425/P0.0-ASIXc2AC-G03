@@ -1,5 +1,30 @@
 
+## Creando useario necessario 
+
+```bash
+sudo adduser bchecker
+```
+
+## Anadir el usuario en grupo de sudors 
+
+```bash
+ sudo usermod -aG sudo bchecker
+
+```
+## camprobar si pueder hacer login 
+```bash
+su bchecker
+```
+
+## cambiar el hostname a B-N03
+```bash
+sudo nano /etc/hostname 
+```
+
 # Configuracion de IP
+```bash
+ sudo nano /etc/netplan/00-installer-config.yaml 
+```
 
 ```
 network:
