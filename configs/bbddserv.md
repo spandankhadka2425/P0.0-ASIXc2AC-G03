@@ -63,6 +63,27 @@ sudo systemctl enable mysql
 # 
 sudo mysql_secure_installation
 ```
+## INSTALLAR CSV
+
+```bash
+wget "https://opendata-ajuntament.barcelona.cat/data/dataset/f3bb60f2-9541-4d08-b0f9-b0a9313fab3d/resource/29d9ff10-6892-4f16-9012-d5c4997857e7/download" -O equipament_educacio.csv
+```
+## Comprobar si el fitxero insatllo corectamente
+
+```bash
+ls -la equipament_educacio.csv
+```
+
+## Copiar el CSV 
+
+```bash
+sudo cp equipament_educacio.csv /var/lib/mysql-files/
+```
+
+## verificar la copia 
+```bash
+sudo ls -la /var/lib/mysql-files/equipament_educacio.csv
+```
 
 ## Acceso a MySQL como root
 
@@ -170,6 +191,12 @@ A continuación se presentan los enlaces al archivo CSV con el listado de equipa
 
 **Instrucción:**  
 Carga estos datos en la base de datos creada para poder realizar las consultas y verificaciones correspondientes.
+
+
+**creando CSV.php**  
+```bash
+sudo nano /var/www/html/CSV.php
+```
 
 **Para aceder los datos via  web**  
 ```
