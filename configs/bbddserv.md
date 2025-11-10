@@ -35,7 +35,10 @@ network:
        dhcp4: true
     enp2s0:
       addresses:
-        -  192.168.x.x/24
+        - 192.168.DMZ.x/24
+      routes:
+        - to: default
+          via: 192.168.130.1  
       nameservers:
         addresses: [8.8.8.8, 8.8.4.4]
 
@@ -168,4 +171,7 @@ A continuación se presentan los enlaces al archivo CSV con el listado de equipa
 **Instrucción:**  
 Carga estos datos en la base de datos creada para poder realizar las consultas y verificaciones correspondientes.
 
-**Cargando los datos en la base de datos:**  
+**Para aceder los datos via  web**  
+```
+http://http://192.168.130.3/CSV.php
+```
