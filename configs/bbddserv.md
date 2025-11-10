@@ -173,5 +173,5 @@ Carga estos datos en la base de datos creada para poder realizar las consultas y
 
 **Para aceder los datos via  web**  
 ```
-http://http://192.168.130.3/CSV.php
+http://192.168.130.3/CSV.php
 ```
