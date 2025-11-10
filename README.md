@@ -11,6 +11,70 @@
 Desplegar una infraestructura completa para una aplicación multicapa que incluya:
 - Web Server
 - Monitor de xarxes
+Nombre del Equipo: W-N03
+
+Servicio: Web Server
+
+IP: 192.168.3.10
+
+Red Virtual: DMZ
+
+Función: Servidor Web
+
+
+Nombre del Equipo: R-N03
+
+Servicio: Router
+
+IP: 192.168.3.11
+
+Red Virtual: NAT, DMZ, INTRANET
+
+Función: Salida a internet / Enrutador entre redes
+
+
+Nombre del Equipo: B-N03
+
+Servicio: Base de Datos
+
+IP: 192.168.3.12
+
+Red Virtual: DMZ
+
+Función: Servidor MySQL
+
+
+Nombre del Equipo: F-N03
+
+Servicio: FTP
+
+IP: 192.168.3.13
+
+Red Virtual: DMZ
+
+Función: Servidor FTP
+
+
+Nombre del Equipo: PC-1.03
+
+Servicio: Cliente Windows
+
+IP: 192.168.3.14
+
+Red Virtual: INTRANET
+
+Función: Cliente
+
+
+Nombre del Equipo: PC-2.03
+
+Servicio: Cliente Linux
+
+IP: 192.168.3.15
+
+Red Virtual: INTRANET
+
+Función: Cliente
 - SSH
 - Base de datos (MySQL)
 - DHCP
