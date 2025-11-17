@@ -1,240 +1,214 @@
-```markdown
-# Análisis Técnico de las Tecnologías del Proyecto P0.0-ASIXc2AC-G03
+# 💻 Análisis Técnico de las Tecnologías del Proyecto
 
 ## Introducción
 
-Este documento justifica la selección de tecnologías para el proyecto de infraestructura multicapa que incluye servicios de Web Server, Base de Datos, DHCP, DNS y FTP distribuidos en arquitectura DMZ e Intranet. Las decisiones se fundamentan en criterios de compatibilidad, facilidad de gestión y tiempo de implementación disponible (6 semanas, 3 sprints).
+Este documento presenta una investigación técnica sobre las tecnologías seleccionadas para el proyecto de infraestructura multicapa **P0.0-ASIXc2AC-G03**. Se analizan las características fundamentales de cada componente, se justifica su elección frente a alternativas del mercado y se explica por qué resultan óptimas para los requisitos específicos del proyecto que debe completarse en **6 semanas** distribuidas en **3 sprints**.
 
 ---
 
-## 1. Ubuntu Server - Sistema Operativo Base
+## 🐧 Ubuntu Server - Sistema Operativo Base
 
-**Desarrollador:** Canonical Ltd. | **Usado por:** Netflix, Wikipedia, Snapchat, eBay.
+**Desarrollador:** Canonical Ltd.
+**Empresas que lo utilizan:** Netflix, Wikipedia, Snapchat, eBay.
 
-### Por qué es la mejor elección
+### Características Técnicas Fundamentales
 
-**Gestión unificada de servicios:** Los 5 servicios requeridos (Apache, MySQL, BIND9, ISC-DHCP, vsftpd) están disponibles en repositorios oficiales con `apt install`, eliminando problemas de dependencias y garantizando compatibilidad entre versiones.
+Ubuntu Server es una distribución Linux derivada de Debian, optimizada específicamente para entornos de servidor. Su arquitectura está basada en el kernel Linux con optimizaciones para operaciones de entrada/salida intensivas, gestión de memoria en sistemas multiusuario y soporte nativo para tecnologías de virtualización como KVM y LXD.
 
-**Netplan preinstalado:** Configurar las tres redes (DMZ: 192.168.130.0/24, Intranet: 192.168.30.0/24, NAT) es simple con YAML:
+El sistema utiliza **APT (Advanced Package Tool)** como gestor de paquetes, proporcionando acceso a más de 50,000 paquetes verificados y firmados criptográficamente.
 
-```yaml
-network:
-  version: 2
-  ethernets:
-    enp0s8:
-      addresses: [192.168.130.2/24]
-      gateway4: 192.168.130.1
-```
+Una característica diferenciadora es **Systemd** como sistema de inicialización. Systemd proporciona arranque paralelo de servicios, gestión avanzada de procesos (*cgroups*), *logging* centralizado con *journald* y control granular de recursos. Esto significa que todos los servicios del proyecto (Apache, MySQL, BIND9, ISC-DHCP, vsftpd) se gestionan con comandos uniformes como `systemctl start`, `systemctl stop` y `systemctl status`.
 
-- Versionable en Git (requisito del proyecto)
-- `netplan try` permite rollback automático en 120 segundos si hay errores
-- Compatible con entornos virtuales de IsardVDI
+Las versiones **LTS (Long Term Support)** ofrecen 5 años de actualizaciones de seguridad garantizadas.
 
-**Usuario bchecker automatizable:**
+En cuanto a **seguridad**, Ubuntu Server incluye *AppArmor* habilitado por defecto y **UFW (Uncomplicated Firewall)** como interfaz simplificada para configurar el *firewall*.
 
-```bash
-adduser bchecker
-echo "bchecker:bchecker121" | chpasswd
-usermod -aG sudo bchecker
-```
+### Por Qué Supera a Debian para Este Proyecto
 
-**Ventaja sobre Debian:** Netplan vs interfaces(5) legacy, MySQL 8.0 vs 5.7 obsoleta, documentación más accesible para estudiantes, instalación 10 minutos más rápida.
+* **Facilidad de instalación y configuración inicial:** Ubuntu Server simplifica el proceso con perfiles preconfigurados, reduciendo el tiempo de instalación de 30-35 minutos (Debian) a **15-20 minutos** (Ubuntu), lo cual es crucial para un plazo de 6 semanas.
+* **Netplan como configurador de red moderno:** Utiliza archivos de configuración **YAML**, mucho más legible e intuitivo que `/etc/network/interfaces` de Debian. Incluye el comando `netplan try` que aplica una configuración temporalmente, evitando bloqueos accidentales.
+* **Versiones de software más actualizadas:** Ubuntu Server **22.04 LTS** incluye **MySQL 8.0**, significativamente más reciente y eficiente (vital para la importación CSV del Sprint 2) que MySQL 5.7 en Debian Stable.
+* **Documentación orientada a usuarios:** La documentación oficial de Ubuntu es más estructurada y orientada a guías paso a paso para usuarios con menos experiencia.
+* **Compatibilidad con entornos virtualizados:** Optimizado y certificado para funcionar en plataformas como *IsardVDI*, incluyendo herramientas como *cloud-init*.
 
 ---
 
-## 2. MySQL - Sistema de Gestión de Bases de Datos
+## 🗄️ MySQL - Sistema de Gestión de Bases de Datos Relacional
 
-**Desarrollador:** Oracle Corporation | **Usado por:** Meta, YouTube, Booking.com.
+**Desarrollador:** Oracle Corporation
+**Empresas que lo utilizan:** Meta (Facebook), YouTube, Booking.com, Twitter.
 
-### Por qué es la mejor elección
+### Características Técnicas Fundamentales
 
-**Importación CSV nativa (requisito crítico):**
+MySQL es un sistema de gestión de bases de datos relacional (**RDBMS**). Su arquitectura *pluggable* permite usar diferentes motores, siendo **InnoDB** el motor por defecto que proporciona:
 
-```sql
-LOAD DATA LOCAL INFILE '/ruta/equipaments_educacio.csv'
-INTO TABLE equipaments
-FIELDS TERMINATED BY ',' 
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
-```
+* Transacciones **ACID** completas.
+* Bloqueo a nivel de fila (*row-level locking*) para alta concurrencia.
+* **MVCC** (*Multi-Version Concurrency Control*).
 
-Importa miles de filas en segundos sin scripts externos. PostgreSQL requiere permisos de superusuario y configuración compleja de `pg_hba.conf`.
+**MySQL 8.0** introdujo mejoras como:
+* Almacenamiento y consulta nativa de **JSON**.
+* Mejoras en rendimiento y *Window functions*.
 
-**Integración PHP inmediata (Sprint 3):**
+### Por Qué Supera a PostgreSQL para Este Proyecto
 
-```php
-<?php
-$conn = mysqli_connect("192.168.30.4", "bchecker", "bchecker121", "educacio_bcn");
-$result = mysqli_query($conn, "SELECT * FROM equipaments LIMIT 10");
-while($row = mysqli_fetch_assoc($result)) {
-    echo $row['nom_equipament'] . "<br>";
-}
-?>
-```
+* **Importación directa de archivos CSV:** El comando nativo `LOAD DATA INFILE` es simple y eficiente para el requisito del Sprint 2:
 
-La extensión `mysqli` viene incluida en PHP. PostgreSQL requiere instalar `php-pgsql` adicional con sintaxis menos intuitiva (`pg_connect`, `pg_query`).
-
-**Configuración usuario bchecker simplificada:**
-
-```sql
-CREATE USER 'bchecker'@'%' IDENTIFIED BY 'bchecker121';
-GRANT ALL PRIVILEGES ON educacio_bcn.* TO 'bchecker'@'%';
-```
-
-Tres comandos vs editar múltiples archivos de configuración en PostgreSQL.
-
-**Ventaja sobre PostgreSQL:** Instalación 10 minutos vs 30 minutos, phpMyAdmin simple vs pgAdmin complejo, documentación abundante para principiantes, tiempo de despliegue Sprint 2 reducido en 50%.
-
----
-
-## 3. Netplan - Configuración de Red
-
-**Desarrollador:** Canonical Ltd. | **Contexto:** Estándar en Ubuntu Server, usado por IBM y Dell.
-
-### Por qué es la mejor elección
-
-**Configuración declarativa del router R-N03:**
-
-```yaml
-network:
-  version: 2
-  renderer: networkd
-  ethernets:
-    enp0s3:  # NAT
-      dhcp4: true
-    enp0s8:  # DMZ
-      addresses: [192.168.130.1/24]
-    enp0s9:  # Intranet
-      addresses: [192.168.30.1/24]
-```
-
-Todo en un archivo YAML versionable en Git (requisito obligatorio del proyecto). Los cambios son legibles en diffs, facilitando revisión por el profesor.
-
-**Validación segura con `netplan try`:** Rollback automático previene bloqueos de acceso en IsardVDI donde no hay consola física disponible.
-
-**Ventaja sobre interfaces(5) de Debian:** 10 líneas YAML vs 15+ líneas sintaxis legacy, validación integrada vs cambios directos sin verificación, aprendizaje 30 min vs 2-3 horas.
+    ```sql
+    LOAD DATA LOCAL INFILE '/ruta/equipaments_educacio.csv'
+    INTO TABLE equipaments
+    FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+    LINES TERMINATED BY '\n'
+    IGNORE 1 ROWS;
+    ```
+    PostgreSQL requiere mayores restricciones de privilegios y configuraciones más complejas con `COPY`.
+* **Integración nativa con PHP:** PHP incluye la extensión **mysqli** por defecto, simplificando el desarrollo del Sprint 3:
+    ```php
+    $conexion = mysqli_connect("192.168.30.4", "bchecker", "bchecker121", "educacio_bcn");
+    $resultado = mysqli_query($conexion, "SELECT nom_equipament, adreca FROM equipaments");
+    while($fila = mysqli_fetch_assoc($resultado)) {
+        echo $fila['nom_equipament'] . " - " . $fila['adreca'];
+    }
+    ```
+    PostgreSQL requiere instalar paquetes (`php-pgsql`) y usa funciones menos intuitivas.
+* **Herramientas gráficas de administración:** **phpMyAdmin** proporciona una interfaz web extremadamente intuitiva para inspeccionar datos, esencial para la validación del Sprint 2.
+* **Configuración de acceso remoto simplificada:** La configuración de acceso remoto para el entorno multicapa es directa:
+    ```sql
+    CREATE USER 'bchecker'@'%' IDENTIFIED BY 'bchecker121';
+    GRANT ALL PRIVILEGES ON educacio_bcn.* TO 'bchecker'@'%';
+    FLUSH PRIVILEGES;
+    ```
+    PostgreSQL requiere editar manualmente dos archivos de configuración (`postgresql.conf` y `pg_hba.conf`), un proceso más complejo.
+* **Curva de aprendizaje optimizada:** MySQL permite enfocarse en conceptos fundamentales de bases de datos relacionales sin dispersarse en características avanzadas innecesarias para este proyecto.
 
 ---
 
-## 4. Git/GitHub - Control de Versiones
+## 🌐 Netplan - Configurador Moderno de Redes
 
-**Desarrollador:** Comunidad open source, GitHub (Microsoft) | **Usado por:** 100% proyectos modernos.
+**Desarrollador:** Canonical Ltd.
+**Contexto de uso:** Estándar en Ubuntu Server, implementado en infraestructuras *cloud*.
 
-### Por qué es obligatorio
+### Características Técnicas Fundamentales
 
-**Requisito explícito:** "Tota la configuració i documentació ha d'estar en un repositori Git amb el nom: P0.0-ASIXc2AC-G03"
+Netplan utiliza **configuración declarativa** mediante archivos **YAML** (`/etc/netplan/`) sobre el *backend* `systemd-networkd`.
 
-**Versionado de configuraciones:**
+El formato YAML ofrece legibilidad y facilita el **versionado** en Git. Su comando clave es `netplan try`, que aplica la configuración temporalmente (120 segundos) y revierte automáticamente si se pierde la conectividad, previniendo el bloqueo del sistema.
 
-```bash
-git add netplan/00-installer-config.yaml
-git commit -m "Sprint 1: Configurar DMZ 192.168.130.0/24"
-git push origin main
-```
+### Por Qué Supera a la Configuración Manual de Debian
 
-Historial completo para auditoría del profesor, recuperación de versiones anteriores con `git checkout`, trabajo en equipo sin conflictos mediante branches por sprint.
-
-**Sin alternativa viable:** SVN es centralizado y legacy, Mercurial sin ecosistema gratuito equivalente, no usar control de versiones incumple requisito del proyecto.
-
----
-
-## 5. Apache HTTP Server - Servidor Web
-
-**Desarrollador:** Apache Software Foundation | **Usado por:** Adobe, LinkedIn, Cisco.
-
-### Por qué es la mejor elección
-
-**Despliegue PHP plug-and-play (Sprint 3):**
-
-```bash
-sudo apt install apache2 php libapache2-mod-php php-mysql
-```
-
-PHP se ejecuta con `mod_php` sin configurar FastCGI ni servicios adicionales. Archivos en `/var/www/html/` son accesibles inmediatamente en `http://192.168.130.2/`.
-
-**Aplicación funcional en minutos:**
-
-```php
-<?php
-$conn = mysqli_connect("192.168.30.4", "bchecker", "bchecker121", "educacio_bcn");
-$result = mysqli_query($conn, "SELECT * FROM equipaments LIMIT 20");
-?>
-<table>
-  <?php while($row = mysqli_fetch_assoc($result)): ?>
-    <tr><td><?= $row['nom_equipament'] ?></td></tr>
-  <?php endwhile; ?>
-</table>
-```
-
-Este código funciona sin configuración adicional. Nginx requiere instalar PHP-FPM, configurar sockets y editar bloques `location ~ \.php$`.
-
-**Ventaja sobre Nginx:** Instalación PHP 1 paso vs 3 pasos, configuración 5 min vs 20 min, sin necesidad de archivos de configuración complejos, documentación abundante en español, tiempo Sprint 3 reducido de 2h a 30 min.
+* **Configuración de múltiples interfaces simplificada:** Para el router R-N03 con tres interfaces, Netplan usa un único archivo **YAML** legible:
+    ```yaml
+    network:
+      version: 2
+      renderer: networkd
+      ethernets:
+        enp0s3:
+          dhcp4: true
+        enp0s8:
+          addresses: [192.168.130.1/24]
+        enp0s9:
+          addresses: [192.168.30.1/24]
+    ```
+    El método tradicional de Debian (`/etc/network/interfaces`) es más verboso y propenso a errores de sintaxis no detectados.
+* **Integración con control de versiones Git:** Los *diffs* de los archivos YAML son claros y concisos, optimizando la auditoría y el *rollback* con Git.
+* **Compatibilidad con entornos virtualizados (IsardVDI):** `netplan try` es fundamental para evitar la inaccesibilidad en máquinas virtuales sin consola física.
 
 ---
 
-## Sinergias del Stack para el Proyecto
+## 🌳 Git y GitHub - Control de Versiones Distribuido
 
-### Script de despliegue unificado
+**Desarrollador:** Software libre creado por **Linus Torvalds**. GitHub es propiedad de Microsoft Corporation.
+**Empresas que lo utilizan:** Prácticamente el 100% de proyectos *open source* modernos.
 
-```bash
-#!/bin/bash
-# Ejecutar en los 4 servidores (W-N03, B-N03, F-N03, R-N03)
-adduser --disabled-password --gecos "" bchecker
-echo "bchecker:bchecker121" | chpasswd
-usermod -aG sudo bchecker
-apt update && apt upgrade -y
-apt install -y git vim ufw
-ufw allow 22/tcp
-ufw allow from 192.168.30.0/24
-ufw allow from 192.168.130.0/24
-ufw --force enable
-```
+### Características Técnicas Fundamentales
 
-### Estructura del repositorio
+Git es un **DVCS (sistema de control de versiones distribuido)**. Cada repositorio contiene el historial completo del proyecto, permitiendo **trabajo offline**, **redundancia** y **velocidad**.
 
-```
-P0.0-ASIXc2AC-G03/
-├── README.md
-├── docs/
-│   ├── sprint1-router.md
-│   ├── sprint2-servicios.md
-│   └── sprint3-app.md
-├── configs/
-│   ├── netplan/
-│   ├── apache/
-│   ├── mysql/
-│   └── dhcp/
-├── scripts/
-│   └── despliegue-base.sh
-└── webapp/
-    ├── index.php
-    └── equipaments.php
-```
+El **Branching y merging eficientes** es clave, permitiendo **desarrollo paralelo** seguro y la revisión de código mediante *Pull Requests* en **GitHub**.
 
-### Ventajas medibles
+### Por Qué Es Obligatorio y Sin Alternativas Viables
 
-| Tarea | Tiempo con Stack Elegido | Tiempo con Alternativas |
-|-------|--------------------------|-------------------------|
-| Instalación OS base | 15 min | 30 min (Debian) |
-| Configuración 3 redes | 20 min | 1h (interfaces) |
-| Importar CSV a BBDD | 10 min | 40 min (PostgreSQL) |
-| Desplegar app web | 30 min | 2h (Nginx+PHP-FPM) |
-| **Total Sprint 1-3** | **~10h** | **~20h** |
-
-**Ahorro del 50% de tiempo** permite dedicar más horas a documentación y pruebas (requisitos de evaluación).
+* **Requisito explícito del proyecto:** La documentación exige el uso de un repositorio Git.
+* **Versionado de configuraciones de infraestructura:** Git registra cada modificación en configuraciones (Netplan, Apache, etc.), permitiendo la **trazabilidad completa** (`git log`) y la **recuperación ante errores** (`git checkout HEAD~1 -- configs/apache/000-default.conf`).
+    ```bash
+    git checkout HEAD~1 -- configs/apache/000-default.conf
+    ```
+* **Colaboración sin conflictos:** Resuelve la problemática del trabajo en equipo mediante *branches* y la **detección automática de conflictos**.
+* **Auditoría para evaluación académica:** Permite al profesor evaluar contribuciones individuales objetivamente (`git log --author="NombreEstudiante"`).
 
 ---
 
-## Conclusión
+## 🐘 Apache HTTP Server - Servidor Web
 
-El stack **Ubuntu Server + MySQL + Netplan + Apache + Git** optimiza el proyecto P0.0-ASIXc2AC-G03 porque:
+**Desarrollador:** Apache Software Foundation
+**Empresas que lo utilizan:** Adobe, LinkedIn, Cisco, la mayoría de proveedores de hosting compartido.
 
-1. **Cumple todos los requisitos obligatorios:** Usuario bchecker, repositorio Git, 3 redes, importación CSV, aplicación web
-2. **Maximiza eficiencia temporal:** Cada tecnología minimiza complejidad en su área, permitiendo completar 3 sprints de 10h sin bloqueos
-3. **Facilita trabajo en equipo:** Configuraciones versionables, procedimientos homogéneos entre servidores
-4. **Garantiza éxito académico:** Documentación abundante, comunidades activas, problemas comunes tienen soluciones probadas
-5. **Compatible con IsardVDI:** Netplan detecta adaptadores virtuales automáticamente, validación segura sin consola física
+### Características Técnicas Fundamentales
 
-**Recomendación:** Mantener este stack en los 3 sprints, agregando herramientas complementarias solo si el tiempo lo permite (phpMyAdmin para verificar BBDD en Sprint 2).
-```
+Apache tiene una **arquitectura modular** (módulos como `mod_php`, `mod_rewrite`, `mod_ssl`) y soporta diferentes **MPM (Multi-Processing Modules)**.
+
+Una característica única es el soporte para archivos **.htaccess**, que permiten **configuración descentralizada** a nivel de directorio (reescritura de URLs, restricciones de acceso) sin reiniciar el servidor ni requerir permisos de *root*.
+
+La **integración directa con PHP mediante `mod_php`** permite que el código PHP se ejecute dentro del proceso de Apache sin servicios adicionales, simplificando el ciclo de desarrollo para el Sprint 3.
+
+### Por Qué Supera a Nginx para Este Proyecto
+
+* **Despliegue de aplicación PHP sin configuración compleja:** Con Apache, PHP funciona inmediatamente tras la instalación de `libapache2-mod-php`. **Nginx** requiere instalar y configurar **PHP-FPM** como servicio separado, introduciendo conceptos adicionales (Sockets Unix, FastCGI) que aumentan la complejidad y el tiempo de *troubleshooting*.
+    Configuración de Nginx (compleja):
+    ```nginx
+    server {
+        listen 80;
+        root /var/www/html;
+        index index.php index.html;
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+        }
+    }
+    ```
+* ***Troubleshooting* simplificado:** Apache centraliza los errores de PHP en `/var/log/apache2/error.log`, mostrando la línea exacta del fallo. Nginx fragmenta el diagnóstico en múltiples logs (`nginx/error.log` y `php-fpm.log`).
+* **Archivos .htaccess para configuración flexible:** Apache permite cambios rápidos sin reiniciar. **Nginx no soporta `.htaccess`**, requiriendo editar la configuración principal (`sudo`) y reiniciar el servicio para cualquier modificación.
+* **Documentación abundante en español:** El *stack* LAMP tiene una base de conocimientos mucho más amplia y accesible para estudiantes.
+* **Tiempo de implementación del Sprint 3:** Apache requiere **~30 minutos** de configuración; Nginx puede extenderse a **1.5-2 horas**, restando tiempo al desarrollo y la documentación evaluada.
+* **Rendimiento suficiente:** Para la baja carga del proyecto, el rendimiento de Apache es más que suficiente, haciendo que la complejidad de Nginx no se justifique.
+
+---
+
+## ✨ Sinergias Entre Tecnologías Seleccionadas
+
+Las tecnologías elegidas forman un **ecosistema integrado** que optimiza el desarrollo.
+
+### Stack LAMP Clásico Actualizado
+
+La combinación forma el *stack* LAMP (Linux + Apache + MySQL + PHP), complementado con Git y Netplan:
+
+* **Instalación homogénea mediante APT:** Todas las tecnologías se instalan con un único gestor de paquetes y un solo comando, garantizando versiones compatibles.
+    ```bash
+    apt install apache2 mysql-server php libapache2-mod-php php-mysql bind9 isc-dhcp-server vsftpd git
+    ```
+* **Gestión unificada mediante Systemd:** Todos los servicios se controlan con comandos idénticos (`systemctl start/status/restart`) y logs centralizados en *journald*.
+* **Flujo de datos integrado:** Cada transición (CSV → MySQL → PHP → Apache) es **nativa**, sin *adapters* o servicios intermedios.
+* **Configuraciones versionables en Git:** Todas las configuraciones son archivos de texto plano que permiten **infraestructura como código**, despliegue reproducible y auditoría completa.
+
+### Curva de Aprendizaje Incremental
+
+El proyecto está diseñado para construir conocimiento progresivamente:
+
+| Sprint | Enfoque Principal | Tecnologías y Conceptos |
+| :--- | :--- | :--- |
+| **Sprint 1** | Redes | Netplan, Git, conceptos de redes, gestión básica de Linux. |
+| **Sprint 2** | Servicios | MySQL, DHCP, DNS, importación CSV, uso de Systemd. |
+| **Sprint 3** | Aplicación Web | PHP, conexión a bases de datos, HTML/CSS, arquitectura multicapa. |
+
+---
+
+## ✅ Conclusión
+
+La selección de tecnologías (Ubuntu Server, MySQL, Netplan, Git/GitHub y Apache) no es arbitraria, sino resultado de un análisis técnico que prioriza:
+
+1.  **Cumplimiento de requisitos obligatorios:** Satisfacen todos los puntos explícitos del proyecto.
+2.  **Optimización temporal:** Minimizan la complejidad innecesaria (ej. Apache vs Nginx), destinando el tiempo ganado al aprendizaje conceptual y la documentación.
+3.  **Facilidad de aprendizaje:** Curva progresiva, documentación abundante y ejemplos educativos.
+4.  **Preparación profesional:** El *stack* LAMP actualizado y el dominio de Git son habilidades altamente demandadas.
+
+Las alternativas analizadas (Debian, PostgreSQL, Nginx) son tecnologías excelentes, pero introducen complejidad adicional que no se traduce en beneficios proporcionales para los requisitos específicos y el corto plazo (6 semanas) de este proyecto académico.
