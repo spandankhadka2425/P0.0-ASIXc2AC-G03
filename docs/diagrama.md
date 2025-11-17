@@ -4,6 +4,9 @@ El diagrama representa la infraestructura de red del proyecto, mostrando cómo s
 
 ![Diagrama de la infraestructura](../imagen/diagram.png)
 
+
+
+
 - **Router (R-N03):** Es el dispositivo central que conecta y enruta el tráfico entre las distintas redes (NAT, DMZ e INTRANET).
 - **Red NAT:** Permite la salida a internet de los equipos internos a través del router.
 - **Red DMZ:** Zona desmilitarizada donde se ubican los servidores accesibles desde el exterior, como el servidor web (W-N03), el servidor de base de datos (B-N03) y el servidor FTP (F-N03).
