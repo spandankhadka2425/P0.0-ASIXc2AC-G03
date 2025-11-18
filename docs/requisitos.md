@@ -84,20 +84,20 @@
 ### Calendario de Sprints
 
 #### Sprint 1 (COMPLETADO)
-* **Fecha inicio:** 3 de noviembre
-* **Fecha fin:** 17 de noviembre
+* **Fecha inicio:** 18 de noviembre
+* **Fecha fin:** 3 de noviembre
 * **Duración:** 2 semanas (10 horas)
 * **Estado:** ✅ Finalizado
 
 #### Sprint 2 (COMPLETADO)
-* **Fecha inicio:** 17 de noviembre
-* **Fecha fin:** 1 de diciembre
+* **Fecha inicio:** 3 de noviembre
+* **Fecha fin:** 18 de diciembre
 * **Duración:** 2 semanas (10 horas)
 * **Estado:** ✅ Finalizado
 
 #### Sprint 3 (EN CURSO)
-* **Fecha inicio:** 1 de diciembre
-* **Fecha fin:** 15 de diciembre
+* **Fecha inicio:** 18 de diciembre
+* **Fecha fin:** 1 de diciembre
 * **Duración:** 2 semanas (10 horas)
 * **Estado:** 🔄 En progreso
 
