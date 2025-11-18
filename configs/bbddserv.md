@@ -85,6 +85,7 @@ sudo cp equipament_educacio.csv /var/lib/mysql-files/
 sudo ls -la /var/lib/mysql-files/equipament_educacio.csv
 ```
 
+
 ## Acceso a MySQL como root
 
 ```bash
@@ -102,6 +103,28 @@ SHOW DATABASES;
 -- 
 SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = 'barcelona_education';
 ```
+
+ 
+## 2 crear tabla
+
+```sql
+CREATE TABLE equipaments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    register_id INT,
+    name VARCHAR(255),
+    addresses_road_name VARCHAR(255),
+    addresses_start_street_number VARCHAR(50),
+    addresses_zip_code VARCHAR(20),
+    addresses_district_name VARCHAR(100),
+    addresses_neighborhood_name VARCHAR(100),
+    values_category VARCHAR(100),
+    values_subcategory VARCHAR(100),
+    values_secondary_filters VARCHAR(100),
+    geo_epgs_4326_x DECIMAL(10,6),
+    geo_epgs_4326_y DECIMAL(10,6),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 ## 2 Verificar el Usuario `bchecker`
 
