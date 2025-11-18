@@ -308,6 +308,6 @@ sudo cp /etc/backup_dns_config/resolv.conf.original /etc/resolv.conf
 sudo systemctl start systemd-resolved
 sudo systemctl enable systemd-resolved
 ```
-**Explicación:** Restaura la configuración original de DNS en caso de problemas o para volver al estado inicial.
+
 
 ---
