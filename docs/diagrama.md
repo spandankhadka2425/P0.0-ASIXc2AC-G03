@@ -13,4 +13,3 @@ El diagrama representa la infraestructura de red del proyecto, mostrando cómo s
 - **Red INTRANET:** Red interna donde se encuentran los clientes, como el PC con Windows (PC-1.03) y el PC con Linux (PC-2.03).
 - **Conexiones:** El diagrama muestra cómo cada equipo está conectado a su respectiva red y cómo todas las redes se interconectan a través del router.
 
-Este diagrama facilita la visualización de la arquitectura de red, ayudando a comprender la distribución y la función de cada componente dentro del
