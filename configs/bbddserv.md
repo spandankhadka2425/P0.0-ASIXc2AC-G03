@@ -35,7 +35,7 @@ network:
        dhcp4: true
     enp2s0:
       addresses:
-        - 192.168.DMZ.x/24
+        - 192.168.INTRANET.x/24
       routes:
         - to: default
           via: 192.168.130.1  
