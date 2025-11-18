@@ -6,7 +6,7 @@
 |-----------------|------------------|----------------------------|------------------------|--------------------------------------|
 | WebServer       | W-N03            | 192.168.130.2              | DMZ                    | Servidor Web                         |
 | **Router**      | R-N03            | 192.168.130.1<br>192.168.30.1 | NAT<br>DMZ<br>INTRANET | Salida a internet<br>Red para servers<br>Red interna |
-| BBDD            | B-N03            | 192.168.130.3              | DMZ                    | Servidor MySQL                       |
+| BBDD            | B-N03            | 192.168.30.4              | INTRANET                    | Servidor MySQL                       |
 | FTP             | F-N03            | 192.168.130.4              | DMZ                    | Servidor FTP                         |
 | C. Windows      | PC-1.03          | 192.168.30.2               | INTRANET               | Cliente                              |
 | C. Linux        | PC-2.03          | 192.168.30.3               | INTRANET               | Cliente                              |
