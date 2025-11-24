@@ -6,7 +6,7 @@
 |---------------|-------------------|----------------------------|------------------------|----------------------------------------------|
 | Web Server    | W-N03             | 192.168.130.2              | DMZ                    | Servidor web (Apache2)                       |
 | Router        | R-N03             | 192.168.130.1, 192.168.30.1| NAT, DMZ, INTRANET      | Puerta de enlace, interconexión de redes     |
-| Base de Datos | B-N03             | 192.168.30.4               | INTRANET               | Servidor de base de datos (MySQL)            |
+| Base de Datos | B-N03             | 192.168.30.47               | INTRANET               | Servidor de base de datos (MySQL)            |
 | FTP Server    | F-N03             | 192.168.130.4              | DMZ                    | Servidor FTP (vsftpd)                        |
 | Cliente Win   | PC-1.03           | 192.168.30.92              | INTRANET               | Estación cliente Windows                     |
 | Cliente Linux | PC-2.03           | 192.168.30.43              | INTRANET               | Estación cliente Linux                       |

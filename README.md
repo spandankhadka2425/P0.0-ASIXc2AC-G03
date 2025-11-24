@@ -1,5 +1,34 @@
 # P0.0 - Despliegue de la Infraestructura
 
+## Estructura del proyecto
+
+### 📁 Configuración de servicios (`configs`)
+- [Configuración del servidor de base de datos](configs/bbddserv.md)
+- [Configuración del cliente Linux](configs/cliente_linux.md)
+- [Configuración del cliente Windows](configs/cliente_Win.md)
+- [Configuración de DNS y DHCP](configs/dns_dhcp.md)
+- [Configuración del servidor FTP](configs/ftp.md)
+- [Configuración del router](configs/ruter.md)
+- [Configuración del servidor web](configs/webserver.md)
+
+### 📁 Documentación técnica (`docs`)
+- [Creación del repositorio Git](docs/creacion_Rep_Git.md)
+- [Diagrama de la infraestructura](docs/diagrama.md)
+- [Investigación de tecnologías](docs/investigacion.md)
+- [Requisitos del proyecto](docs/requisitos.md)
+- [Tabla de configuración de IPs](docs/tabla_ip.md)
+
+### 📁 Imágenes y diagramas (`imagen`)
+- [Comprobación de CSV](imagen/comprobacion_CSV.png)
+- [Copia de CSV](imagen/copy_CSV.png)
+- [Diagrama de red](imagen/diagram.png)
+- [Exportando CSV](imagen/exportando_CSV.png)
+- [Creación del repositorio (rep1)](imagen/rep1.png)
+- [Primer commit (rep2)](imagen/rep2.png)
+
+---
+
+
 ## Información del Proyecto
 
 - **Módulo:** 0379 - Proyecto intermodular en administración de sistemas informáticos en red
