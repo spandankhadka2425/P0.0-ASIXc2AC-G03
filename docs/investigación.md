@@ -16,7 +16,7 @@ Este documento analiza en profundidad las tecnologías seleccionadas para el pro
 Ubuntu Server y Debian comparten la misma raíz: ambos derivan del kernel Linux y emplean APT como gestor de paquetes, con soporte para arquitecturas modernas y optimizaciones multiusuario. Ambos reciben actualizaciones de seguridad rápidas y disponen de un ecosistema de herramientas listo para servidores web, bases de datos y virtualización.
 
 #### Ubuntu Server:
-- Ciclo de soporte claro: 5 años de soporte LTS.
+- Ciclo de soporte claro: 10 años de soporte LTS.
 - Incluye por defecto Systemd, AppArmor, UFW y herramientas para virtualización y entornos cloud, como Netplan y cloud-init.
 - Dispone de imágenes pre-optimizadas para escenarios de virtualización (IsardVDI, Proxmox).
 
