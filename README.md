@@ -18,15 +18,7 @@
 - [Requisitos del proyecto](docs/requisitos.md)
 - [Tabla de configuración de IPs](docs/tabla_ip.md)
 
-### 📁 Imágenes y diagramas (`imagen`)
-- [Comprobación de CSV](imagen/comprobacion_CSV.png)
-- [Copia de CSV](imagen/copy_CSV.png)
-- [Diagrama de red](imagen/diagram.png)
-- [Exportando CSV](imagen/exportando_CSV.png)
-- [Creación del repositorio (rep1)](imagen/rep1.png)
-- [Primer commit (rep2)](imagen/rep2.png)
 
----
 
 
 ## Información del Proyecto
