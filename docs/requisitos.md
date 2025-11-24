@@ -1,4 +1,4 @@
-```markdown
+
 # Planificación del Proyecto - P0.0-ASIXc2AC-G03
 
 ## Requisitos del Proyecto
