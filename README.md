@@ -1,70 +1,88 @@
-# P0.0 - Desplegament de la Infraestructura
+# P0.0 - Despliegue de la Infraestructura
 
-## 📋 Información del Proyecto
+## Información del Proyecto
 
-* **Módulo:** 0379 - Projecte intermodular d'administració de sistemes informàtics en xarxa
-* **Actividad:** P0.0 - Desplegament d'infraestructura
-* **Grupo:** ASIXc2AC-G03
-* **Duración:** 6 semanas (hasta 18/11)
-* **Metodología:** Sprints quincenales (3 sprints de 10h cada uno)
+- **Módulo:** 0379 - Proyecto intermodular en administración de sistemas informáticos en red
+- **Actividad:** P0.0 - Despliegue de infraestructura
+- **Grupo:** ASIXc2AC-G03
+- **Duración:** 6 semanas (finaliza 1/12/2025)
+- **Metodología:** Sprints quincenales (3 sprints de 10 horas cada uno)
 
-## 🎯 Objetivo
+## Objetivo
 
-Desplegar una infraestructura completa para una aplicación multicapa que incluya:
+El objetivo principal consiste en desplegar una infraestructura completa y funcional para una aplicación multicapa que integre los siguientes servicios y componentes:
 
-* Web Server
-* Monitor de xarxes
-* SSH
-* Base de datos (MySQL)
-* DHCP
-* DNS
-* FTP
+- Servidor web (Apache2)
+- Monitorización de red
+- Acceso remoto por SSH
+- Base de datos (MySQL)
+- Servidor DHCP
+- Servidor DNS
+- Servidor FTP
 
-## 🔧 Especificaciones Técnicas
+---
 
-### Hardware de Xarxa
+## Especificaciones Técnicas
 
-* **Router:** R-N03 con 3 redes:
-  * DMZ
-  * INTRANET
-  * NAT
+### Hardware y Redes
 
-### Servidores a Desplegar
+- **Router principal:** R-N03, equipado con interfaces para tres redes separadas:
+  - DMZ
+  - INTRANET
+  - NAT
 
-* **Web Server:** W-N03
-* **SSH Server**
-* **Base de Datos:** B-N03 (MySQL)
-* **DHCP Server**
-* **DNS Server**
-* **FTP Server:** F-N03
+### Servidores Desplegados
+
+- **Web Server:** W-N03 (Apache2)
+- **Servidor SSH**
+- **Base de datos:** B-N03 (MySQL)
+- **Servidor DHCP**
+- **Servidor DNS**
+- **Servidor FTP:** F-N03 (vsftpd)
 
 ### Clientes
 
-* 1 PC Windows (PC-1.03)
-* 1 PC Linux (PC-2.03)
+- **PC-1.03:** Estación cliente Windows
+- **PC-2.03:** Estación cliente Linux
 
-## 🔐 Credenciales Comunes
+---
 
-* **Usuario:** `bchecker`
-* **Contraseña:** `bchecker121`
-* Debe estar configurado en todos los sistemas y servicios
+## Credenciales Comunes
 
-## 📊 Dataset
+- **Usuario global:** bchecker
+- **Contraseña:** bchecker121
+- Configurado en todos los sistemas y servicios para administración y pruebas comunes
 
-**Equipamientos de educación - Ciudad de Barcelona**
+---
 
-* **Fuente:** OpenData Ajuntament de Barcelona
-* **Formato:** CSV
-* **Contenido:** Listado de equipamientos educativos de la ciudad
+## Dataset Utilizado
 
-## 📋 Inventario de Equipos
+- **Conjunto de datos:** Equipamientos educativos de la ciudad de Barcelona (OpenData Barcelona)
+- **Formato:** CSV
+- **Contenido:** Listado y detalles de los equipamientos educativos públicos
 
-| Nombre del Equipo | Servicio | IP | Red Virtual | Función |
-|-------------------|----------|----|--------------|---------| 
-| W-N03 | Web Server | 192.168.130.2 | DMZ | Servidor Web |
-| R-N03 | Router | 192.168.130.1<br>192.168.30.1 | NAT, DMZ, INTRANET | Salida a internet / Enrutador entre redes |
-| B-N03 | Base de Datos | 192.168.30.4 | INTRANET | Servidor MySQL |
-| F-N03 | FTP | 192.168.130.4 | DMZ | Servidor FTP |
-| PC-1.03 | Cliente Windows | 192.168.30.2 | INTRANET | Cliente |
-| PC-2.03 | Cliente Linux | 192.168.30.3 | INTRANET | Cliente |
+---
+
+## Inventario de Equipos y Configuración de Red
+
+| Nombre del Equipo | Servicio          | IPs                        | Red Virtual           | Función                                   |
+|-------------------|-------------------|----------------------------|----------------------|-------------------------------------------|
+| W-N03             | Web Server        | 192.168.130.2              | DMZ                  | Servidor web (Apache2)                    |
+| R-N03             | Router            | 192.168.130.1, 192.168.30.1| NAT, DMZ, INTRANET    | Enrutamiento y enlace entre todas las redes|
+| B-N03             | Base de Datos     | 192.168.30.4               | INTRANET             | Servidor de base de datos (MySQL)         |
+| F-N03             | FTP Server        | 192.168.130.4              | DMZ                  | Servidor FTP (vsftpd)                     |
+| PC-1.03           | Cliente Windows   | 192.168.30.2               | INTRANET             | Estación de trabajo cliente               |
+| PC-2.03           | Cliente Linux     | 192.168.30.3               | INTRANET             | Estación de trabajo cliente               |
+
+---
+
+## Resumen de Componentes y Flujos
+
+- **Web Server y FTP Server:** Ubicados en la DMZ para ofrecer servicios externos con un nivel elevado de seguridad.
+- **Base de Datos y clientes:** Ubicados exclusivamente en la INTRANET, protegidos de acceso externo.
+- **Router:** Conecta y gestiona el tráfico entre redes (NAT, DMZ, INTRANET) y permite salida controlada a Internet.
+- **DNS y DHCP:** Proveen servicios esenciales de resolución y asignación de IPs para los equipos y servidores.
+- **SSH:** Acceso remoto administrado a todos los servidores para tareas operativas y control.
+
+Toda la configuración y documentación técnica está centralizada en el repositorio del proyecto para un despliegue reproducible y una administración eficiente.
 
