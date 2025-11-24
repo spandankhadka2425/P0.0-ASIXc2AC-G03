@@ -2,7 +2,7 @@
 
 ## Estructura del proyecto
 
-### 📁 Configuración de servicios (`configs`)
+### Configuración de servicios (`configs`)
 - [Configuración del servidor de base de datos](configs/bbddserv.md)
 - [Configuración del cliente Linux](configs/cliente_linux.md)
 - [Configuración del cliente Windows](configs/cliente_Win.md)
@@ -10,7 +10,7 @@
 - [Configuración del router](configs/ruter.md)
 - [Configuración del servidor web](configs/webserver.md)
 
-### 📁 Documentación técnica (`docs`)
+### Documentación técnica (`docs`)
 - [Creación del repositorio Git](docs/creacion_Rep_Git.md)
 - [Diagrama de la infraestructura](docs/diagrama.md)
 - [Investigación de tecnologías](docs/investigacion.md)
