@@ -9,7 +9,7 @@
 | BBDD | B-N03 | 192.168.30.4 | INTRANET | Servidor MySQL |
 | FTP | F-N03 | 192.168.130.4 | DMZ | Servidor FTP |
 | C. Windows | PC-1.03 | 192.168.30.92 | INTRANET | Cliente |
-| C. Linux | PC-2.03 | 192.168.30.42 | INTRANET | Cliente |
+| C. Linux | PC-2.03 | 192.168.30.43 | INTRANET | Cliente |
 
 ## 🌐 Resumen de Configuración de Redes
 
