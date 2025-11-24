@@ -6,7 +6,6 @@
 - [Configuración del servidor de base de datos](configs/bbddserv.md)
 - [Configuración del cliente Linux](configs/cliente_linux.md)
 - [Configuración del cliente Windows](configs/cliente_Win.md)
-- [Configuración de DNS y DHCP](configs/dns_dhcp.md)
 - [Configuración del servidor FTP](configs/ftp.md)
 - [Configuración del router](configs/ruter.md)
 - [Configuración del servidor web](configs/webserver.md)
