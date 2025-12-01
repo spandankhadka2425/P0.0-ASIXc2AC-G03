@@ -309,5 +309,17 @@ sudo systemctl start systemd-resolved
 sudo systemctl enable systemd-resolved
 ```
 
+## 14.Rutas
+
+```bash
+ ip route show
+
+default via 192.168.120.1 dev enp1s0 proto dhcp src 192.168.123.142 metric 100 
+192.168.30.0/24 dev enp3s0 proto kernel scope link src 192.168.30.1 
+192.168.120.0/22 dev enp1s0 proto kernel scope link src 192.168.123.142 metric 100 
+192.168.120.1 dev enp1s0 proto dhcp scope link src 192.168.123.142 metric 100 
+192.168.130.0/24 dev enp2s0 proto kernel scope link src 192.168.130.1 
+
+```
 
 ---
