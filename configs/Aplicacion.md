@@ -49,7 +49,7 @@ network:
       dhcp4: false
       addresses: [192.168.130.47/24] #DMZ
 ```
-> Se ha añadido una nueva interfaz `enp3s0` para que el servidor web y el servidor de base de datos (BBDD) puedan tener conectividad directa entre sí, facilitando la comunicación interna y mejorando el rendimiento de los servicios.
+> Se ha añadido una nueva interfaz `enp3s0` para que el servidor web y el servidor de base de datos (BBDD) puedan tener conectividad directa entre sí.
 ---
 
 **Explicación:**  
