@@ -2,7 +2,7 @@
 
 El diagrama representa la infraestructura de red del proyecto, mostrando cómo se conectan los diferentes equipos y redes virtuales:
 
-![Diagrama de la infraestructura](../imagen/diagram.png)
+![Diagrama de la infraestructura](../imagen/Diagram.png)
 
 
 
