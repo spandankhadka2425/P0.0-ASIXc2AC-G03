@@ -115,6 +115,8 @@ sudo nano /etc/apache2/ports.conf
 #192.168.30.47:80 → Para la red Intranet (clientes internos)
 #192.168.130.47:80 → Para la red DMZ (servidor web y acceso externo)
 
+> Se ha especificado la IP en la configuración de Apache porque el puerto solo estaba escuchando en IPv6 y no en IPv4. De esta forma, garantizamos que el servicio web esté disponible correctamente en las redes configuradas con direcciones IPv4.
+
 sudo systemctl restart apache2
 ```
 
