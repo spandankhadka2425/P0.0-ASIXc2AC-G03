@@ -29,13 +29,14 @@ network:
     enp1s0:
       dhcp4: true
     enp2s0:
-      addresses:
-        - 192.168.INTRANET.x/24
+      dhcp4: true
       routes:
         - to: default
           via: 192.168.30.1
       nameservers:
         addresses: [8.8.8.8,8.8.4.4]
+
+
        
 ```
 
