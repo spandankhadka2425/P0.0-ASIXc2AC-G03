@@ -29,7 +29,7 @@
 - Equipos principales:
   - PC-1.03 (Cliente Windows): 192.168.30.92
   - PC-2.03 (Cliente Linux): 192.168.30.43
-  - B-N03 (Base de Datos - MySQL): 192.168.30.4
+  - B-N03 (Base de Datos - MySQL): 192.168.30.47
   - R-N03 (Router): 192.168.30.1 (interfaz INTRANET)
 
 ### Red NAT
